@@ -10,3 +10,5 @@ node_modules
 # test
 test.txt
 test1.txt
+
+jsconfig.json
