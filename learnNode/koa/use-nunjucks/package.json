@@ -1,0 +1,20 @@
+{
+    "name": "nunjunks",
+    "version": "1.0.0",
+    "description": "Learn nunjucks",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "nunjunks"
+    ],
+    "author": "Edward",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git"
+    },
+    "dependencies": {
+        "nunjucks": "3.0.1"
+    }
+}

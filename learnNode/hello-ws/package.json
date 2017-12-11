@@ -1,0 +1,21 @@
+{
+    "name": "hello-sequelize",
+    "version": "1.0.0",
+    "description": "learn ws",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "sequelize"
+    ],
+    "author": "Edward",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michaelliao/learn-javascript.git"
+    },
+    "dependencies": {
+        "ws": "3.3.2"
+    }
+}

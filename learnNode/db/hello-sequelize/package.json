@@ -1,0 +1,23 @@
+{
+    "name": "hello-sequelize",
+    "version": "1.0.0",
+    "description": "learn sequelize",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "sequelize"
+    ],
+    "author": "Edward",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michaelliao/learn-javascript.git"
+    },
+    "dependencies": {
+        "sequelize": "4.23.4",
+        "mysql2": "1.5.1",
+        "mysql": "2.15.0"
+    }
+}
