@@ -17,7 +17,7 @@ function addMapping(router,method,path,func){
             router.delete(path,func);
             console.log(`register URL mapping: DELETE ${path}`);
         default:
-            console.log(`invalid URL: ${url}`);
+            console.log(`invalid URL`);
             break;
     }
 }

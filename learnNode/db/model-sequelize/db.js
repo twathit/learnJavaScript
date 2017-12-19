@@ -59,7 +59,7 @@ function defineModel(name,attributes){
                 let dbType=Sequelize.DataTypes[key];        //适用于sequelize4，对于sequelize3:Sequelize[key]
                 
                 if (typeof dbType==='function'){
-                    //console.log(dbType);
+                    console.log(dbType);
                     if (v instanceof dbType){
                         if (v._length){
                             return `${dbType.key}(${v._length})`;       //这里的属性名就是key!

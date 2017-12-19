@@ -10,8 +10,16 @@ function addMapping(router,method,path,func){
             router.post(path,func);
             console.log(`register URL mapping: POST ${path}`);
             break;
+        case 'PUT':
+            router.put(path,func);
+            console.log(`register URL mappping :PUT ${path}`);
+            break;
+        case 'DELETE':
+            router.delete(path,func);
+            console.log(`register URL mappping :DELETE ${path}`);
+            break;
         default:
-            console.log(`invalid URL: ${url}`);
+            console.log(`invalid URL`);
             break;
     }
 }
