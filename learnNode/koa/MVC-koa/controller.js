@@ -11,7 +11,7 @@ function addMapping(router,method,path,func){
             console.log(`register URL mapping: POST ${path}`);
             break;
         default:
-            console.log(`invalid URL: ${url}`);
+            console.log(`invalid URL`);
             break;
     }
 }
