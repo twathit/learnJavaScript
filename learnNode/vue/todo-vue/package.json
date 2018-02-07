@@ -1,0 +1,23 @@
+{
+    "name": "todo-vue",
+    "version": "1.0.0",
+    "description": "Learn vue",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "nunjunks"
+    ],
+    "author": "Edward",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/twathit/learnJavaScript"
+    },
+    "dependencies": {
+        "koa": "2.4.1",
+        "mime": "2.2.0",
+        "mz": "2.7.0"
+    }
+}

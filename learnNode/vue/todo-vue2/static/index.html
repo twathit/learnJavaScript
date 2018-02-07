@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="learn vue">
+	<title>Vue</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+	<script>
+function showError(resp) {
+    resp.json().then(function (result) {
+        console.log('Error: ' + result.message);
+    });
+}
+
+$(function(){
+	var vm=new Vue({
+		el:'#vm',
+		http: {
+			timeout: 5000
+		},
+		data:{
+			title:'TODO List',
+			todos:[],
+			loading: false
+		},
+		created: function(){
+			this.init();
+		},
+		methods: {
+			init: function () {
+				var that = this;		//this指向vm对象
+				that.loading = true;
+				that.$resource('/api/todos').get().then(function (resp) {
+					that.loading = false;
+					resp.json().then(function (result) {
+						that.todos = result.todos;
+					});
+				}, function (resp) {
+					that.loading = false;
+					showError(resp);
+				});
+			},
+			create: function (todo) {
+				var that = this;		//this指向vm对象
+				that.$resource('/api/todos').save(todo).then(function (resp) {
+					resp.json().then(function (result) {
+						that.todos.push(result);
+					});
+				}, function (resp) {
+					showError(resp);
+				});
+			},
+			update: function (todo,prop,e) {
+				var that = this;		//this指向vm对象
+				var t = {
+					name: todo.name,
+					description: todo.description
+				};
+				t[prop] = e.target.innerText;
+				if (t[prop] === todo[prop]) {
+					return;
+				}
+				that.$resource('/api/todos/'+todo.id).update(t).then(function (resp) {
+					resp.json().then(function (result) {
+						todo.name = result.name;
+						todo.description = result.description;
+					});
+				}, function (resp) {
+					e.target.innerText = todo[prop];
+					showError(resp);
+				});
+			},
+			remove: function (todo) {
+				var that = this;
+				that.$resource('/api/todos/' + todo.id).delete().then(function (resp) {
+					var i,index = -1;
+					for (i=0;i<that.todos.length;i++) {
+						if (that.todos[i].id === todo.id) {
+							index = i;
+							break;
+						}
+					}
+					if (index >= 0) {
+						that.todos.splice(index,1);
+					}
+				}, function (resp) {
+					showError(resp);
+				});
+			}
+		}
+	});
+	window.vm=vm;
+
+	var vmAdd = new Vue({
+		el: '#vmAdd',
+		data: {
+			name: '',
+			description: ''
+		},
+		methods: {
+			submit: function () {
+				vm.create(this.$data);
+				this.name = '';
+				this.description = '';
+			}
+		}
+	});
+});
+
+
+	</script>
+</head>
+
+<body>
+	<nav class="navbar navbar-static-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Learn Javascript</a>
+			</div>
+			<nav class="collapse navbar-collapse" id="bs-navbar">
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="#">Home</a>
+					</li>
+					<li>
+						<a href="#">Link</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</nav>
+	<div id="important" style="color: rgb(217, 207, 233);background-color: rgb(68, 46, 175);padding: 30px 0;margin: -20px 0 20px 0;">
+		<div class="container">
+			<h1 style="color: #FFFFFF;font-size: 60px;">Getting started</h1>
+			<p style="font-size: 24px;line-height: 48px">Learn Javascript,Node.js,Python</p>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><span class="glyphicon glyphicon-th-list"></span> MVVM</h3>
+					</div>
+					<div class="panel-body">
+						<div id="vm">
+							<h3>{{title}}</h3>
+							<p v-if="loading">Loading...</p>
+							<ol>
+								<li v-for="t in todos">
+									<dl>
+										<dt contenteditable="true" v-on:blur="update(t,'name',$event)">{{t.name}}</dt>
+										<dd contenteditable="true" v-on:blur="update(t,'description',$event)">{{t.description}}</dd>
+										<dd><a href="#0" v-on:click="remove(t)">Delete</a></dd>
+									</dl>
+								</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-eye-open"></span> Code</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="vmAdd" action="#0" v-on:submit.prevent="submit">
+                        	<div class="form-group">
+                        		<label>Name:</label>
+                        		<input type="text" v-model="name" class="form-control" placeholder="Enter name">
+                        	</div>
+                        	<div class="form-group">
+                        		<label>Description:</label>
+                        		<input type="text" v-model="description" class="form-control" placeholder="Enter description">
+                        	</div>
+                        	<button type="submit" class="btn btn-default">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
