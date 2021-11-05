@@ -1,1 +1,1 @@
-# learn JavaScript and Node.js
+# First sight of JavaScript and Node.js
